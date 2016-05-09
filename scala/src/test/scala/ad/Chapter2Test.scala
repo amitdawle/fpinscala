@@ -4,6 +4,8 @@ import org.scalatest._
 
 import com.ad.Chapter2._
 
+import scala.Function
+
 class Chapter2Test extends FlatSpec with Matchers {
 
   // Exercise 2.1
@@ -64,6 +66,43 @@ class Chapter2Test extends FlatSpec with Matchers {
   "isSorted" should "be false for array of int not in any sorted order" in {
     isSorted[Int](Array(4, 3, 6, 9), (a, b) => a > b ) shouldBe false
   }
+ //  // Exercise 2.3
+ // def curry[A, B, C](f: (A, B) => C) : A => (B => C)
+ "curry" should " a function with two arguments return a function that takes one argument and returns a function " in {
+   val f :(Int, Int) => Int = (x, y) => x + y
+   val cf = curry(f)
+   cf(2)(3) shouldBe 5
+ }
+
+  "curry" should " a function with two arguments return a function that can be partially applied " in {
+    val f :(Int, Int) => Int = (x, y) => x + y
+    val pcf = curry(f)(2)
+    pcf(3) shouldBe 5
+  }
+
+
+  // Exercise 2.4
+ // def uncurry[A, B, C](f: A => B => C )
+  "uncurry" should " a convert a curried function (f: A => B => C ) into two arguments function f:(A, B) => C " in {
+    val f :(Int, Int) => Int = (x, y) => x + y
+    val cf = curry(f)
+    cf(2)(3) shouldBe 5
+    uncurry(cf)(2, 3) shouldBe 5
+  }
+
+ // exercise 2.5 . Compose
+  "compose" should " satisfy composition f o g i.e g(x) -> y , f(y) -> z then f(g(x)) -> z" in {
+    val g : String => String = s => s.reverse
+    val f : String => Int = s => s.toInt
+
+    g("123") shouldBe "321"
+    f("123") shouldBe 123
+
+    compose(f, g)("123") shouldBe 321
+    compose(f, g)("123") shouldBe f(g("123"))
+  }
+
+
 
 
 }
