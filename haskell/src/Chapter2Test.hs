@@ -1,9 +1,13 @@
 import Test.Hspec
 import Test.QuickCheck
+import Data.List
 import Chapter2 ( fib,
-                  isSorted
+                  isSorted,
+                  curry,
+                  uncurry,
+                  compose
                      )
-
+import Prelude hiding(curry, uncurry, compose)
 main = hspec $
  describe "Chapter2" $ do
   describe "fib" $ do
@@ -27,3 +31,23 @@ main = hspec $
    it "works for unsorted lists of strings" $ do
     isSorted ["A", "c", "d"] (>) `shouldBe` False
 
+  describe "curry" $ do
+   it "converts function f(A, B) -> C in f(A) -> (B -> C) " $ do
+   (Chapter2.curry f) 2 3 `shouldBe` 5
+
+
+  describe "uncurry" $ do
+   it "converts function f(A -> B -> C) in f((A, B) -> C) " $ do
+   (Chapter2.uncurry g)(2, 3) `shouldBe` 5
+
+  describe "compose" $ do
+     it "converts function f(A -> B) and g(B -> C) in h(A -> C) " $ do
+     (Chapter2.compose reverse sort)[2, 5, 3]  `shouldBe` [5, 3, 2]
+
+   where f (a, b) = a + b
+         g  a b = a + b
+
+  --describe "uncurry" $ do
+  -- it "converts function f( A -> ( B -> C)) into f((A, B) -> C) " $ do
+  -- (Chapter2.uncurry f)(2, 3) `shouldBe` 5
+   --where f a b = a + b
