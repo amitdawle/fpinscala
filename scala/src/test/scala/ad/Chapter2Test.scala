@@ -20,7 +20,6 @@ class Chapter2Test extends FlatSpec with Matchers {
 
   "fib" should "produce expected value for large inputs" in {
     fib(30) should be (514229)
-
   }
 
 
@@ -66,7 +65,13 @@ class Chapter2Test extends FlatSpec with Matchers {
   "isSorted" should "be false for array of int not in any sorted order" in {
     isSorted[Int](Array(4, 3, 6, 9), (a, b) => a > b ) shouldBe false
   }
- //  // Exercise 2.3
+
+  "isSorted" should "be true for large int array" in {
+    isSorted[Int]((1 to 10000).toArray, (a, b) => a < b ) shouldBe  true
+  }
+
+
+  //  // Exercise 2.3
  // def curry[A, B, C](f: (A, B) => C) : A => (B => C)
  "curry" should " a function with two arguments return a function that takes one argument and returns a function " in {
    val f :(Int, Int) => Int = (x, y) => x + y

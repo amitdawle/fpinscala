@@ -7,6 +7,7 @@ object Chapter2 {
 
   def fib(n: Int) : Int = {
     require(n >= 1 , "n should be greater than 0")
+    @annotation.tailrec
     def go(i:Int, a:Int, b:Int) : Int = i match {
       case 0 => a
       case _ => go( i - 1, b, a + b)
@@ -25,15 +26,15 @@ object Chapter2 {
     case Array(a, b, as@_*) => ordered(a, b) && isSorted(as, ordered)
   }
  */
+  @annotation.tailrec
   def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean = as.length match {
     case 0 => true
     case 1 => true
-    case 2 => ordered(as(0), as(1))
-    case _ => ordered(as(0), as(1)) && isSorted( as.drop(2), ordered)
+    case _ => if (ordered(as(0), as(1))) isSorted( as.drop(2), ordered) else false
   }
 
   // Exercise 2.3
-  def curry[A, B, C](f: (A, B) => C) : A => (B => C) = a => ( b => f(a, b))
+  def curry[A, B, C](f: (A, B) => C) : A => (B => C) = a => b => f(a, b)
 
   // Exercise 2.4
   def uncurry[A, B, C](f: A => B => C ) : (A, B) => C = (a, b) => f(a)(b)
