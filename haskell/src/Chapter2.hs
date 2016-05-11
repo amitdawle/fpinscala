@@ -20,7 +20,7 @@ fib n
 isSorted :: [a] -> (a -> a  -> Bool) -> Bool
 isSorted [] _ = True
 isSorted [x] _ = True
-isSorted (x:y:xs) f = f x y && isSorted (x:xs) f
+isSorted (x:y:xs) f = f x y && isSorted (y:xs) f
 
 -- Exercise 2.3
 -- def curry[A, B, C](f: (A, B) => C) : A => (B => C)
