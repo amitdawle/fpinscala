@@ -24,6 +24,8 @@ main = hspec $
     isSorted [10,9..1] (>) `shouldBe` True
    it "works for unsorted lists of int in no order" $ do
     isSorted (2:[10,9..1]) (>) `shouldBe` False
+   it "works for numbers increasing and decreasing order " $ do
+    isSorted [1, 2, 1, 2] (<) `shouldBe` False
    it "works for sorted lists of strings in ascending order" $ do
     isSorted (map (show) [1..9]) (<) `shouldBe` True
    it "works for sorted lists of strings in descending order" $ do

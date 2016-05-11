@@ -70,6 +70,9 @@ class Chapter2Test extends FlatSpec with Matchers {
     isSorted[Int]((1 to 10000).toArray, (a, b) => a < b ) shouldBe  true
   }
 
+  "isSorted" should "be false for pattern (1, 2, 1)" in {
+    isSorted[Int](Array(1, 2, 1, 2), (a, b) => a < b ) shouldBe  false
+  }
 
   //  // Exercise 2.3
  // def curry[A, B, C](f: (A, B) => C) : A => (B => C)

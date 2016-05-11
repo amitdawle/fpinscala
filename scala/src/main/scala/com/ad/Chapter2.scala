@@ -22,7 +22,6 @@ object Chapter2 {
     def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean = as match {
     case Array() => true
     case Array(a) => true
-    case Array(a, b) => ordered(a, b)
     case Array(a, b, as@_*) => ordered(a, b) && isSorted(as, ordered)
   }
  */
@@ -30,7 +29,7 @@ object Chapter2 {
   def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean = as.length match {
     case 0 => true
     case 1 => true
-    case _ => if (ordered(as(0), as(1))) isSorted( as.drop(2), ordered) else false
+    case _ => if (ordered(as(0), as(1))) isSorted( as.drop(1), ordered) else false
   }
 
   // Exercise 2.3
