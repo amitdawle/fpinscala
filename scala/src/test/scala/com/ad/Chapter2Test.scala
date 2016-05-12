@@ -1,4 +1,4 @@
-package ad
+package com.ad
 
 import org.scalatest._
 
