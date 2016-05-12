@@ -4,3 +4,4 @@ We are currently using this book at our office book club to do `better` FP in Sc
 The scala code and tests are in scala directory. A haskell port of solutions (along with tests) can be found in haskell directory.
 
 - Chapter 2 solutions available.
+- Chapter 3 started.
