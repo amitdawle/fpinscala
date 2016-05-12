@@ -9,7 +9,7 @@ main = hspec $
  describe "Chapter3" $ do
   describe "tail" $ do
    it "works for empty List" $ do
-     tail (Empty) `shouldBe` (Empty :: (Num a) => List a )
+    tail (Empty) `shouldBe` (Empty :: (Num a) => List a )
    it "should work for list with one element" $ do
     tail (Cons 1 Empty) `shouldBe` (Empty :: (Num a) => List a )
    it "should work for list with more than one element of type int" $ do
