@@ -20,5 +20,7 @@ main = hspec $
     tail (Cons "2" Empty) `shouldBe` (Empty ::  List [Char] )
   it "should work for list of list" $ do
     tail (Cons (Cons "1" Empty) Empty) `shouldBe` (Empty :: List (List[Char]) )
+  it "should work for list of list with many elements" $ do
+    tail (Cons (Cons "2" Empty) (Cons (Cons "1" Empty) Empty) ) `shouldBe` (Cons (Cons "1" Empty) Empty )
 
 
