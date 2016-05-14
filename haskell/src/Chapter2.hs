@@ -13,7 +13,7 @@ fib n
   | n <= 0 = Nothing
   | n > 0 = go (n - 1) 0 1
             where go 0 a b = Just a
-                  go i a b = go (i - 1) b (b + a)
+                  go n a b = go (n - 1) b (b + a)
 
 -- Exercise 2.2
 --    def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean = as match {
