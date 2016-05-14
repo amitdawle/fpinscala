@@ -109,8 +109,4 @@ class Chapter2Test extends FlatSpec with Matchers {
     compose(f, g)("123") shouldBe 321
     compose(f, g)("123") shouldBe f(g("123"))
   }
-
-
-
-
 }

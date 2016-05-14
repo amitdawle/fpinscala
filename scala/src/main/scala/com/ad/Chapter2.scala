@@ -4,7 +4,6 @@ object Chapter2 {
 
   // Exercise 2.1
   // nth Fibonacci number
-
   def fib(n: Int) : Int = {
     require(n >= 1 , "n should be greater than 0")
     @annotation.tailrec
@@ -17,8 +16,6 @@ object Chapter2 {
 
   // Exercise 2.2
   // Unlike haskell, the pattern matching did not work correctly for scala arrays
-
-
   @annotation.tailrec
   def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean = as.length match {
     case 0 => true

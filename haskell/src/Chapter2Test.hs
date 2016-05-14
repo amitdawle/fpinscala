@@ -49,7 +49,3 @@ main = hspec $
    where f (a, b) = a + b
          g  a b = a + b
 
-  --describe "uncurry" $ do
-  -- it "converts function f( A -> ( B -> C)) into f((A, B) -> C) " $ do
-  -- (Chapter2.uncurry f)(2, 3) `shouldBe` 5
-   --where f a b = a + b
