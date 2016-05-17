@@ -7,13 +7,111 @@
     <groupId>com.ad</groupId>
     <artifactId>scala</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <resources.encoding>UTF-8</resources.encoding>
+        <scala.source.dir>src/main/scala</scala.source.dir>
+        <scala.test.dir>src/test/scala</scala.test.dir>
+        <scala.version>2.11.7</scala.version>
+        <scala.maven.plugin.version>3.2.2</scala.maven.plugin.version>
+        <scala.test.version>2.2.5</scala.test.version>
+        <scala.mock.version>3.2.2</scala.mock.version>
+        <maven.resourcec.plugin.version>2.5</maven.resourcec.plugin.version>
+    </properties>
 
     <dependencies>
         <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_2.11</artifactId>
-            <version>2.2.4</version>
+            <version>${scala.test.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalamock</groupId>
+            <artifactId>scalamock-core_2.11</artifactId>
+            <version>${scala.mock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalamock</groupId>
+            <artifactId>scalamock-scalatest-support_2.11</artifactId>
+            <version>${scala.mock.version}</version>
         </dependency>
     </dependencies>
-    
+
+    <build>
+        <sourceDirectory>${scala.source.dir}</sourceDirectory>
+        <testSourceDirectory>${scala.test.dir}</testSourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>${scala.maven.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resourcec.plugin.version}</version>
+                <configuration>
+                    <encoding>${resources.encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>${scala.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <!-- enable scalatest -->
+            <plugin>
+              <groupId>org.scalatest</groupId>
+              <artifactId>scalatest-maven-plugin</artifactId>
+              <version>1.0</version>
+              <configuration>
+                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                <junitxml>.</junitxml>
+                <filereports>TestSuite.txt</filereports>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>test</id>
+                  <goals>
+                    <goal>test</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
