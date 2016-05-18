@@ -3,7 +3,8 @@ import Test.QuickCheck
 import Prelude hiding(tail,
                       dropWhile,
                       takeWhile,
-                      drop)
+                      drop,
+                      init)
 
 import Chapter3 (List(Empty) ,
                  List(Cons),
@@ -11,7 +12,8 @@ import Chapter3 (List(Empty) ,
                  setHead,
                  dropWhile,
                  takeWhile,
-                 drop)
+                 drop,
+                 init)
 
 main = hspec $
  describe "Chapter3" $ do
@@ -70,7 +72,7 @@ main = hspec $
 
   describe "takeWhile" $ do
    it "works for empty List" $ do
-    takeWhile (>0) (Empty) `shouldBe` (Empty)
+    takeWhile (>0) (Empty) `shouldBe` (Empty:: (Num a) => List a)
    it "should take all elements for List with one element satisfying the predicate" $ do
     takeWhile (>0) (Cons 1 Empty) `shouldBe` (Cons 1 Empty)
    it "should take all elements for List with all elements satisfying the predicate" $ do
@@ -81,3 +83,13 @@ main = hspec $
     takeWhile (>0) (Cons 2 (Cons 1(Cons 0 (Cons (-1) Empty)))) `shouldBe` (Cons 2 (Cons 1 Empty))
    it "should take only 2 element for List of 6 where elements (0,1,4,5) satisfy the predicate but (2,3) don't" $ do
     takeWhile (>0) (Cons 2 (Cons 1(Cons 0 (Cons (-1) (Cons 2 (Cons 1 Empty)))))) `shouldBe` (Cons 2 (Cons 1 Empty))
+
+  describe "init" $ do
+   it "works for empty List" $ do
+    init (Empty) `shouldBe` (Empty :: (Num a) => List a)
+   it "init on List with one element is Empty" $ do
+    init (Cons 1 Empty) `shouldBe` (Empty)
+   it "should take all elements except last for List with 2 elements" $ do
+    init (Cons 2 (Cons 1 Empty)) `shouldBe` (Cons 2 Empty)
+   it "should take all element except last for List with more than 2 elements" $ do
+    init (Cons 3 (Cons 2 (Cons 1 Empty))) `shouldBe` (Cons 3(Cons 2 Empty))
