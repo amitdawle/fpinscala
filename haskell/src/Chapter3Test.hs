@@ -4,7 +4,8 @@ import Prelude hiding(tail,
                       dropWhile,
                       takeWhile,
                       drop,
-                      init)
+                      init,
+                      length)
 
 import Chapter3 (List(Empty) ,
                  List(Cons),
@@ -13,7 +14,9 @@ import Chapter3 (List(Empty) ,
                  dropWhile,
                  takeWhile,
                  drop,
-                 init)
+                 init,
+                 foldRight,
+                 length)
 
 main = hspec $
  describe "Chapter3" $ do
@@ -93,3 +96,27 @@ main = hspec $
     init (Cons 2 (Cons 1 Empty)) `shouldBe` (Cons 2 Empty)
    it "should take all element except last for List with more than 2 elements" $ do
     init (Cons 3 (Cons 2 (Cons 1 Empty))) `shouldBe` (Cons 3(Cons 2 Empty))
+
+  describe "foldRight" $ do
+   it "works for empty List" $ do
+    foldRight (+) 0 (Empty) `shouldBe` 0
+   it "can sum a List with one element" $ do
+    foldRight (+) 0 (Cons 1 Empty) `shouldBe` 1
+   it "can sum a List with more than one element" $ do
+    foldRight (+) 0 (Cons 1(Cons 2 Empty)) `shouldBe` 3
+   it "can calculate a sum of a large List " $ do
+    foldRight (+) 0 (foldr (\x t -> Cons x t) Empty [1..1000]  ) `shouldBe` 500500
+   it "can calculate a product of a List with more than one element" $ do
+    foldRight (*) 1 (Cons 3 (Cons 4(Cons 2 Empty))) `shouldBe` 24
+   it "can calculate a product of a large List " $ do
+    foldRight (*) 1 (foldr (\x t -> Cons x t) Empty [1..10]  ) `shouldBe` 3628800 -- 10!
+   it "can short circuit a product of an infinite List if one element is 0" $ do
+    foldRight (\x y -> if (x == 0) then 0 else x * y) 1 (foldr (\x t -> Cons x t) Empty [0,1..]) `shouldBe` 0
+
+  describe "length with foldRight" $ do
+   it "works for empty List" $ do
+      length (Empty) `shouldBe` 0
+   it "works for List with one element" $ do
+      length (Cons 1 Empty) `shouldBe` 1
+   it "works for List with many elements" $ do
+      length (foldr (\x t -> Cons x t) Empty [1..10]  ) `shouldBe` 10

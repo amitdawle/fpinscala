@@ -3,7 +3,8 @@ import Prelude hiding (tail,
                        dropWhile,
                        takeWhile,
                        drop,
-                       init)
+                       init,
+                       length)
 
 
 data List a = Empty | Cons a (List a) deriving (Eq, Show)
@@ -42,8 +43,17 @@ init (Cons x Empty) = Empty
 init (Cons h t) = (Cons h (init t))
 
 
-
 takeWhile :: (a -> Bool) -> (List a) -> (List a)
 takeWhile _ Empty = Empty
 takeWhile f (Cons h t) = if (f h) then (Cons h (takeWhile f t)) else Empty
 
+-- Exercise 3.7
+foldRight :: ( a -> b -> b ) -> b -> (List a) -> b
+foldRight _ b Empty = b
+foldRight f b (Cons h t) = f h (foldRight f b t)
+
+-- Exercise 3.8 is already covered by 3.7
+
+-- Exercise 3.9
+length :: (List a) -> Int
+length xs = foldRight (\x t -> t + 1) 0 xs
