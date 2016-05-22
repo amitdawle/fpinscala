@@ -5,7 +5,6 @@ import com.ad.Chapter3._
 
 import org.scalatest._
 
-
 class Chapter3Test extends FlatSpec with Matchers {
 
   // Exercise 3.2
@@ -69,5 +68,24 @@ class Chapter3Test extends FlatSpec with Matchers {
     tailWithDrop(Cons(1, Cons(2, Nil))) should be (Cons(2, Nil))
   }
 
+ // -- Exercise 3.5
+  "dropWhile" should "return Nil for empty List" in {
+    dropWhile(Nil, {x:Int  => false}) should be (Nil)
+  }
+
+  // -- Exercise 3.5
+  "dropWhile" should "return Nil where for all x => f(x) is true" in {
+    dropWhile(Cons(2, Cons(3, Cons (4, Nil))), {x:Int  => true}) should be (Nil)
+  }
+
+  // -- Exercise 3.5
+  "dropWhile" should "return the same list where for all x => f(x) is false" in {
+    dropWhile(Cons(2, Cons(3, Cons (4, Nil))), {x:Int  => false}) should be (Cons(2, Cons(3, Cons (4, Nil))))
+  }
+
+  // -- Exercise 3.5
+  "dropWhile" should "return a (Cons(2, Cons(0, Cons (4, Nil))) list when for (Cons 0, (Cons(2, Cons(3, Cons (4, Nil)))) for f(x) => x <= 0  " in {
+    dropWhile(Cons (0, Cons(2, Cons(0, Cons (4, Nil)))), {x:Int  => x <= 0}) should be (Cons(2, Cons(0, Cons (4, Nil))))
+  }
 
 }
