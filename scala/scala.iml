@@ -13,9 +13,11 @@
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="scala-sdk-2.11.7" level="application" />
-    <orderEntry type="library" name="Maven: org.scalatest:scalatest_2.11:2.2.4" level="project" />
-    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.2" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.7" level="project" />
+    <orderEntry type="library" name="Maven: org.scalatest:scalatest_2.11:2.2.5" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-reflect:2.11.2" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang.modules:scala-xml_2.11:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.scalamock:scalamock-core_2.11:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.scalamock:scalamock-scalatest-support_2.11:3.2.2" level="project" />
   </component>
 </module>
