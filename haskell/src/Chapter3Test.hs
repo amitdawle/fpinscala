@@ -5,8 +5,10 @@ import Prelude hiding(tail,
                       takeWhile,
                       drop,
                       init,
-                      length)
-
+                      length,
+                      sum,
+                      product)
+import Data.List (foldl')
 import Chapter3 (List(Empty) ,
                  List(Cons),
                  tail,
@@ -16,7 +18,11 @@ import Chapter3 (List(Empty) ,
                  drop,
                  init,
                  foldRight,
-                 length)
+                 length,
+                 foldLeft,
+                 sum,
+                 product,
+                 length2)
 
 main = hspec $
  describe "Chapter3" $ do
@@ -120,3 +126,42 @@ main = hspec $
       length (Cons 1 Empty) `shouldBe` 1
    it "works for List with many elements" $ do
       length (foldr (\x t -> Cons x t) Empty [1..10]  ) `shouldBe` 10
+
+
+  describe "foldLeft" $ do
+   it "works for empty List" $ do
+      foldLeft (\t x -> x + t) (0) (Empty) `shouldBe` 0
+   it "works for List with one element" $ do
+      foldLeft (\t x -> x + t) (0) (Cons 1 Empty) `shouldBe` 1
+   it "works for List with two elements" $ do
+      foldLeft (\t x -> x + t) (0) (Cons 1 (Cons 2 Empty)) `shouldBe` 3
+ -- foldLeft is strict
+   it "works for large List with 100000 elements" $ do
+     foldLeft (\t x -> x + t) (0) (foldl' (\t x -> Cons x t) Empty [1..100000]) `shouldBe` 5000050000
+
+
+  describe "sum" $ do
+   it "works for empty List" $ do
+      sum  (Empty) `shouldBe` 0
+   it "works for List with one element" $ do
+      sum (Cons 1 Empty) `shouldBe` 1
+   it "works for large List with 1000 elements" $ do
+      sum (foldl' (\t x -> Cons x t) Empty [1..1000]) `shouldBe` 500500
+
+
+  describe "product" $ do
+   it "works for empty List" $ do
+      product (Empty) `shouldBe` 1
+   it "works for List with one element" $ do
+      product (Cons 1 Empty) `shouldBe` 1
+   it "works for large List with 10 elements" $ do
+      product (foldl' (\t x -> Cons x t) Empty [1..10]) `shouldBe` 3628800
+
+
+  describe "lengthWithFoldLeft" $ do
+   it "works for empty List" $ do
+      length2 (Empty) `shouldBe` 0
+   it "works for List with one element" $ do
+      length2 (Cons 1 Empty) `shouldBe` 1
+   it "works for large List with 1000 elements" $ do
+      length2 (foldl' (\t x -> Cons x t) Empty [1..1000]) `shouldBe` 1000

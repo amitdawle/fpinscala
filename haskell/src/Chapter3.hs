@@ -57,3 +57,23 @@ foldRight f b (Cons h t) = f h (foldRight f b t)
 -- Exercise 3.9
 length :: (List a) -> Int
 length xs = foldRight (\x t -> t + 1) 0 xs
+
+
+-- Exercise 3.10
+foldLeft :: (b -> a -> b) -> b -> (List a) -> b
+foldLeft _ b Empty = b
+foldLeft f b (Cons h t) = let b' = b `f` h
+                     in seq b' $ foldLeft f b' t
+
+-- Exercise 3.11
+sum :: (Num a) => (List a) -> a
+sum = foldLeft (\t x -> x + t) 0
+
+-- Exercise 3.11
+product :: (Num a) => (List a) -> a
+product = foldLeft (\t x -> x * t) 1
+
+
+-- Exercise 3.11
+length2 :: (Num b) => (List a) -> b
+length2 = foldLeft (\t x -> t + 1) 0
