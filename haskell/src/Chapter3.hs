@@ -91,4 +91,4 @@ foldLeftWithFoldRight f b l = foldRight (\x g t -> g ( f t x ) ) id l b
 
 -- Exercise 3.13
 foldRightWithFoldLeft :: (a -> b -> b) -> b -> (List a) -> b
-foldRightWithFoldLeft f b l = foldLeft (\g t x ->  g(f t x) ) id l b
+foldRightWithFoldLeft f b l = foldLeft (\g x t ->  g(f x t) ) id l b
