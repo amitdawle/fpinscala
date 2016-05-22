@@ -4,7 +4,8 @@ import Prelude hiding (tail,
                        takeWhile,
                        drop,
                        init,
-                       length)
+                       length,
+                       reverse)
 
 
 data List a = Empty | Cons a (List a) deriving (Eq, Show)
@@ -77,3 +78,17 @@ product = foldLeft (\t x -> x * t) 1
 -- Exercise 3.11
 length2 :: (Num b) => (List a) -> b
 length2 = foldLeft (\t x -> t + 1) 0
+
+
+-- Exercise 3.12
+reverse :: (List a) -> (List a)
+reverse = foldLeft (\t x -> Cons x t ) (Empty)
+
+
+-- Exercise 3.13
+foldLeftWithFoldRight :: (b -> a -> b) -> b -> (List a) -> b
+foldLeftWithFoldRight f b l = foldRight (\x g t -> g ( f t x ) ) id l b
+
+-- Exercise 3.13
+foldRightWithFoldLeft :: (a -> b -> b) -> b -> (List a) -> b
+foldRightWithFoldLeft f b l = foldLeft (\g t x ->  g(f t x) ) id l b

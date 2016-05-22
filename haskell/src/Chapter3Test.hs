@@ -7,7 +7,8 @@ import Prelude hiding(tail,
                       init,
                       length,
                       sum,
-                      product)
+                      product,
+                      reverse)
 import Data.List (foldl')
 import Chapter3 (List(Empty) ,
                  List(Cons),
@@ -22,7 +23,10 @@ import Chapter3 (List(Empty) ,
                  foldLeft,
                  sum,
                  product,
-                 length2)
+                 length2,
+                 reverse,
+                 foldLeftWithFoldRight,
+                 foldRightWithFoldLeft)
 
 main = hspec $
  describe "Chapter3" $ do
@@ -165,3 +169,36 @@ main = hspec $
       length2 (Cons 1 Empty) `shouldBe` 1
    it "works for large List with 1000 elements" $ do
       length2 (foldl' (\t x -> Cons x t) Empty [1..1000]) `shouldBe` 1000
+
+
+  describe "reverse" $ do
+   it "works for empty List" $ do
+      reverse (Empty :: (Num a) => List a) `shouldBe` Empty
+   it "works for List with one element" $ do
+      reverse (Cons 1 Empty) `shouldBe` (Cons 1 Empty)
+   it "works for List with more than element" $ do
+      reverse (Cons 1 (Cons 2 (Cons 3 Empty))) `shouldBe` (Cons 3 (Cons 2 (Cons 1 Empty)))
+
+
+  describe "foldLeftWithFoldRight" $ do
+   it "works for empty List" $ do
+      foldLeftWithFoldRight (\t x -> x + t) 0 (Empty) `shouldBe` 0
+   it "works for List with one element" $ do
+      foldLeftWithFoldRight (\t x -> x + t) 0 (Cons 1 Empty) `shouldBe` 1
+   it "works for large List with 1000 elements" $ do
+      foldLeftWithFoldRight (\t x -> x + t) 0 (foldl' (\t x -> Cons x t) Empty [1..1000]) `shouldBe` 500500
+   it "does reverses the list " $ do
+      foldLeftWithFoldRight (\t x -> Cons x t) Empty (Cons 1 (Cons 2 (Cons 3 Empty))) `shouldBe` (Cons 3 (Cons 2 (Cons 1 Empty)))
+
+
+  describe "foldRightWithFoldLeft" $ do
+   it "works for empty List" $ do
+      foldRightWithFoldLeft (\x t -> x + t) 0 (Empty) `shouldBe` 0
+   it "works for List with one element" $ do
+      foldRightWithFoldLeft (\x t -> x + t) 0 (Cons 1 Empty) `shouldBe` 1
+   it "works for List with one element" $ do
+      foldRightWithFoldLeft (\x t -> x - t) 0 (Cons 2 (Cons 3 (Cons 4 Empty))) `shouldBe` 3
+   it "works for large List with 1000 elements" $ do
+      foldRightWithFoldLeft (\x t -> x + t) 0 (foldl' (\t x -> Cons x t) Empty [1..1000]) `shouldBe` 500500
+   it "does not reverse the list " $ do
+      foldRightWithFoldLeft (\x t -> Cons x t) Empty (Cons 1 (Cons 2 (Cons 3 Empty))) `shouldBe` (Cons 1 (Cons 2 (Cons 3 Empty)))
