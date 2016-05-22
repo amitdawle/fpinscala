@@ -14,7 +14,7 @@
         <scala.test.dir>src/test/scala</scala.test.dir>
         <scala.version>2.11.7</scala.version>
         <scala.maven.plugin.version>3.2.2</scala.maven.plugin.version>
-        <scala.test.version>2.2.5</scala.test.version>
+        <scala.test.version>2.2.6</scala.test.version>
         <scala.mock.version>3.2.2</scala.mock.version>
         <maven.resourcec.plugin.version>2.5</maven.resourcec.plugin.version>
     </properties>
