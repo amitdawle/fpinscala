@@ -26,7 +26,8 @@ import Chapter3 (List(Empty) ,
                  length2,
                  reverse,
                  foldLeftWithFoldRight,
-                 foldRightWithFoldLeft)
+                 foldRightWithFoldLeft,
+                 append)
 
 main = hspec $
  describe "Chapter3" $ do
@@ -202,3 +203,18 @@ main = hspec $
       foldRightWithFoldLeft (\x t -> x + t) 0 (foldl' (\t x -> Cons x t) Empty [1..1000]) `shouldBe` 500500
    it "does not reverse the list " $ do
       foldRightWithFoldLeft (\x t -> Cons x t) Empty (Cons 1 (Cons 2 (Cons 3 Empty))) `shouldBe` (Cons 1 (Cons 2 (Cons 3 Empty)))
+
+
+  describe "append" $ do
+   it "works for empty Lists" $ do
+      append (Empty::(Num a)=> List a) (Empty::(Num a)=> List a) `shouldBe` (Empty::(Num a)=> List a)
+   it "works when first list list is empty" $ do
+      append (Empty) (Cons 1 Empty) `shouldBe` (Cons 1 Empty)
+   it "works when second list is empty" $ do
+      append (Cons 1 Empty) (Empty) `shouldBe` (Cons 1 Empty)
+   it "works for one list with one element and other with many" $ do
+      append (Cons 1 Empty) (Cons 3 ((Cons 2 Empty))) `shouldBe` (Cons 1 (Cons 3 (Cons 2 Empty)))
+      append (Cons 3 ((Cons 2 Empty))) (Cons 1 Empty)  `shouldBe` (Cons 3 (Cons 2 (Cons 1 Empty)))
+   it "works for larger Lists" $ do
+      append (Cons 3 ((Cons 2 Empty))) (Cons 4 ((Cons 5 Empty)))  `shouldBe` (Cons 3 (Cons 2 (Cons 4 (Cons 5 Empty))))
+
