@@ -10,12 +10,13 @@ import Prelude hiding(tail,
                       product,
                       reverse,
                       concat,
-                      map)
+                      map,
+                      filter)
 import Data.List (foldl')
 import Chapter3 (List(Empty), List(Cons), tail, setHead, dropWhile,
                  takeWhile,drop,init, foldRight,length,
                  foldLeft,sum, product, length2, reverse, foldLeftWithFoldRight,
-                 foldRightWithFoldLeft, append, concat, map)
+                 foldRightWithFoldLeft, append, concat, map, filter, flatMap)
 
 main = hspec $
  describe "Chapter3" $ do
@@ -216,11 +217,28 @@ main = hspec $
 
 
   describe "map" $ do
-   it "add 1 works for empty list" $ do
+   it ":add 1 works for empty list" $ do
       map (+ 1) Empty `shouldBe` (Empty)
-   it "add 1 works for list with elements" $ do
+   it ":add 1 works for list with elements" $ do
       map (+ 1) (Cons 2 ( Cons 1 Empty)) `shouldBe` (Cons 3 ( Cons 2 Empty))
-   it "show works for empty list" $ do
+   it ":show works for empty list" $ do
       map (show) (Empty::(Num a) => List a) `shouldBe` (Empty)
-  it "show works for list with elements" $ do
+   it ":show works for list with elements" $ do
       map (show) (Cons 2 ( Cons 1 Empty)) `shouldBe` (Cons "2" ( Cons "1" Empty))
+   it "can map elements to list" $ do
+      map (\x -> Cons x Empty) (Cons 2 ( Cons 1 Empty)) `shouldBe` (Cons (Cons 2 Empty) (Cons (Cons 1 Empty)  Empty))
+
+
+  describe "filter" $ do
+   it "it works for empty list" $ do
+      filter (even) Empty `shouldBe` (Empty)
+   it "it works for list with elements" $ do
+      filter (even) (Cons 3 (Cons 2 ( Cons 1 Empty))) `shouldBe` ( Cons 2 Empty)
+
+  describe "flatMap" $ do
+   it "it works for empty list" $ do
+      flatMap (\x -> Cons x Empty) Empty `shouldBe` (Empty :: Num a => List a)
+   it "it works for list with one element" $ do
+      flatMap (\x -> Cons x Empty) (Cons 1 Empty) `shouldBe` (Cons 1 Empty)
+   it "it works for list with many elements" $ do
+      flatMap (\x -> Cons x Empty) (Cons 2 (Cons 1 Empty)) `shouldBe` (Cons 2 (Cons 1 Empty))

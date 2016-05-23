@@ -8,7 +8,8 @@ import Prelude hiding (tail,
                        reverse,
                        foldl,
                        concat,
-                       map)
+                       map,
+                       filter)
 
 
 data List a = Empty | Cons a (List a) deriving (Eq, Show)
@@ -108,7 +109,15 @@ concat :: (List(List a)) -> (List a)
 concat Empty = Empty
 concat xs  = foldRight (\x t -> append x t) Empty xs
 
--- Exercise 3.17, 3.18 and 3.19
+-- Exercise 3.16, 3.17 and 3.18
 map :: (a -> b) ->(List a) -> (List b)
 map f Empty = Empty
 map f (Cons h t) = Cons (f h) (map f t)
+
+-- Exercise 3.19
+filter :: (a -> Bool) -> (List a) -> (List a)
+filter p ls = foldRight (\h t -> if ( p h ) then Cons h t else t  ) Empty ls
+
+-- Exercise 3.20
+flatMap :: (a -> List b) -> List a -> List b
+flatMap f l = concat (map f l)
