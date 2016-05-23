@@ -8,26 +8,14 @@ import Prelude hiding(tail,
                       length,
                       sum,
                       product,
-                      reverse)
+                      reverse,
+                      concat,
+                      map)
 import Data.List (foldl')
-import Chapter3 (List(Empty) ,
-                 List(Cons),
-                 tail,
-                 setHead,
-                 dropWhile,
-                 takeWhile,
-                 drop,
-                 init,
-                 foldRight,
-                 length,
-                 foldLeft,
-                 sum,
-                 product,
-                 length2,
-                 reverse,
-                 foldLeftWithFoldRight,
-                 foldRightWithFoldLeft,
-                 append)
+import Chapter3 (List(Empty), List(Cons), tail, setHead, dropWhile,
+                 takeWhile,drop,init, foldRight,length,
+                 foldLeft,sum, product, length2, reverse, foldLeftWithFoldRight,
+                 foldRightWithFoldLeft, append, concat, map)
 
 main = hspec $
  describe "Chapter3" $ do
@@ -208,7 +196,7 @@ main = hspec $
   describe "append" $ do
    it "works for empty Lists" $ do
       append (Empty::(Num a)=> List a) (Empty::(Num a)=> List a) `shouldBe` (Empty::(Num a)=> List a)
-   it "works when first list list is empty" $ do
+   it "works when first list is empty" $ do
       append (Empty) (Cons 1 Empty) `shouldBe` (Cons 1 Empty)
    it "works when second list is empty" $ do
       append (Cons 1 Empty) (Empty) `shouldBe` (Cons 1 Empty)
@@ -218,3 +206,21 @@ main = hspec $
    it "works for larger Lists" $ do
       append (Cons 3 ((Cons 2 Empty))) (Cons 4 ((Cons 5 Empty)))  `shouldBe` (Cons 3 (Cons 2 (Cons 4 (Cons 5 Empty))))
 
+  describe "concat" $ do
+   it "works for empty list" $ do
+      concat (Cons (Empty::(Num a)=> List a) Empty ) `shouldBe` (Empty::(Num a)=> List a)
+   it "works for list with one element" $ do
+      concat (Cons (Cons 1 Empty) Empty ) `shouldBe` (Cons 1 Empty)
+   it "works for list many elements" $ do
+      concat (Cons (Cons 2 Empty) (Cons (Cons 1 Empty) Empty )) `shouldBe` (Cons 2 (Cons 1 Empty))
+
+
+  describe "map" $ do
+   it "add 1 works for empty list" $ do
+      map (+ 1) Empty `shouldBe` (Empty)
+   it "add 1 works for list with elements" $ do
+      map (+ 1) (Cons 2 ( Cons 1 Empty)) `shouldBe` (Cons 3 ( Cons 2 Empty))
+   it "show works for empty list" $ do
+      map (show) (Empty::(Num a) => List a) `shouldBe` (Empty)
+  it "show works for list with elements" $ do
+      map (show) (Cons 2 ( Cons 1 Empty)) `shouldBe` (Cons "2" ( Cons "1" Empty))

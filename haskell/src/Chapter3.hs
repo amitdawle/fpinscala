@@ -5,7 +5,10 @@ import Prelude hiding (tail,
                        drop,
                        init,
                        length,
-                       reverse)
+                       reverse,
+                       foldl,
+                       concat,
+                       map)
 
 
 data List a = Empty | Cons a (List a) deriving (Eq, Show)
@@ -98,3 +101,14 @@ append :: (List a) -> (List a) -> (List a)
 append Empty b = b
 append a Empty = a
 append a b = foldRight (\x t -> Cons x t ) b a
+
+
+-- Exercise 3.15
+concat :: (List(List a)) -> (List a)
+concat Empty = Empty
+concat xs  = foldRight (\x t -> append x t) Empty xs
+
+-- Exercise 3.17, 3.18 and 3.19
+map :: (a -> b) ->(List a) -> (List b)
+map f Empty = Empty
+map f (Cons h t) = Cons (f h) (map f t)
