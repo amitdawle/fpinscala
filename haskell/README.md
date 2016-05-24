@@ -9,7 +9,30 @@ Following problem solutions are now available
 
 ## Chapter 3
 Following problem solutions are now available
-- Exercise 3.2 : Implement tail
-- Exercise 3.3 : Implement setHead
-- Exercise 3.4 : Implement drop
-- Exercise 3.5 : Implement dropWhile
+- Exercise 3.2  : Implement tail
+- Exercise 3.3  : Implement setHead
+- Exercise 3.4  : Implement drop
+- Exercise 3.5  : Implement dropWhile
+- Exercise 3.6  : Implement init
+- Exercise 3.7  : Implement product
+- Exercise 3.8  : Done
+- Exercise 3.9  : Implement length using fold
+- Exercise 3.10 : Implement foldLeft
+- Exercise 3.11 : Implement sum, product and length using foldLeft
+- Exercise 3.12 : Implement reverse using foldLeft 
+- Exercise 3.13 : Implement foldLeft as foldRight
+- Exercise 3.14 : Implement append using foldRight/foldLeft
+- Exercise 3.15 : Implement concatenate for lists
+- Exercise 3.16 : Implemented as map (3.18)
+- Exercise 3.17 : Implemented as map (3.18)
+- Exercise 3.18 : Implement map
+- Exercise 3.19 : Implement filter
+- Exercise 3.20 : Implement flatmap
+- Exercise 3.21 : Implement filter using flatmap
+- Exercise 3.22 : Implemented using (3.23)
+- Exercise 3.23 : Implement zipWith
+
+
+ 
+
+

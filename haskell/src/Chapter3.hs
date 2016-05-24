@@ -9,7 +9,7 @@ import Prelude hiding (tail,
                        foldl,
                        concat,
                        map,
-                       filter)
+                       filter, zipWith)
 
 
 data List a = Empty | Cons a (List a) deriving (Eq, Show)
@@ -121,3 +121,14 @@ filter p ls = foldRight (\h t -> if ( p h ) then Cons h t else t  ) Empty ls
 -- Exercise 3.20
 flatMap :: (a -> List b) -> List a -> List b
 flatMap f l = concat (map f l)
+
+
+-- Exercise 3.21
+filterUsingFlatMap  :: (a -> Bool) -> (List a) -> (List a)
+filterUsingFlatMap f l = flatMap (\a -> if (f a) then Cons a Empty else Empty) l
+
+-- Exercise 3.22 and 3.23
+zipWith :: (a -> b -> c) -> (List a) -> (List b) -> (List c)
+zipWith _ _ Empty = Empty
+zipWith _ Empty _ = Empty
+zipWith f (Cons h1 t1) (Cons h2 t2) = Cons (f h1 h2) (zipWith f t1 t2)

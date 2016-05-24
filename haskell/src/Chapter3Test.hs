@@ -1,22 +1,15 @@
 import Test.Hspec
 import Test.QuickCheck
-import Prelude hiding(tail,
-                      dropWhile,
-                      takeWhile,
-                      drop,
-                      init,
-                      length,
-                      sum,
-                      product,
-                      reverse,
-                      concat,
-                      map,
-                      filter)
+import Prelude hiding(tail, dropWhile, takeWhile,
+                      drop, init, length,
+                      sum, product, reverse,
+                      concat, map, filter, zipWith)
 import Data.List (foldl')
 import Chapter3 (List(Empty), List(Cons), tail, setHead, dropWhile,
                  takeWhile,drop,init, foldRight,length,
                  foldLeft,sum, product, length2, reverse, foldLeftWithFoldRight,
-                 foldRightWithFoldLeft, append, concat, map, filter, flatMap)
+                 foldRightWithFoldLeft, append, concat, map, filter, flatMap,
+                 filterUsingFlatMap, zipWith)
 
 main = hspec $
  describe "Chapter3" $ do
@@ -242,3 +235,29 @@ main = hspec $
       flatMap (\x -> Cons x Empty) (Cons 1 Empty) `shouldBe` (Cons 1 Empty)
    it "it works for list with many elements" $ do
       flatMap (\x -> Cons x Empty) (Cons 2 (Cons 1 Empty)) `shouldBe` (Cons 2 (Cons 1 Empty))
+
+
+  describe "filterWithFlatMap" $ do
+   it "it works for empty list" $ do
+      filterUsingFlatMap (even) Empty `shouldBe` (Empty)
+   it "it works for list with elements" $ do
+      filterUsingFlatMap (even) (Cons 3 (Cons 2 ( Cons 1 Empty))) `shouldBe` ( Cons 2 Empty)
+
+
+  describe "zipWith" $ do
+   it "it works for both empty lists" $ do
+      zipWith (+) Empty Empty `shouldBe` (Empty)
+   it "it works for first list is empty" $ do
+      zipWith (+) (Cons 1 Empty) Empty `shouldBe` (Empty)
+   it "it works for second list is empty" $ do
+      zipWith (+) Empty (Cons 1 Empty) `shouldBe` (Empty)
+   it "it add elements for lists with same number of elements" $ do
+      zipWith (+) (Cons 3 Empty) (Cons 2 Empty) `shouldBe` (Cons 5 Empty)
+   it "it works even when first list is shorter than second" $ do
+       zipWith (+) (Cons 3 Empty) (Cons 2 (Cons 4 Empty)) `shouldBe` (Cons 5 Empty)
+   it "it works even when first list is longer than second" $ do
+      zipWith (+) (Cons 3 (Cons 2 Empty)) (Cons 2 Empty) `shouldBe` (Cons 5 Empty)
+   it "it works longer lists" $ do
+      zipWith (+) (Cons 3 (Cons 2 Empty)) (Cons 2 (Cons 4 Empty)) `shouldBe` (Cons 5 (Cons 6 Empty))
+   it "it works with multiplication function too" $ do
+      zipWith (*) (Cons 3 (Cons 2 Empty)) (Cons 2 (Cons 4 Empty)) `shouldBe` (Cons 6 (Cons 8 Empty))
