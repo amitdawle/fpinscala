@@ -31,6 +31,12 @@ Following problem solutions are now available
 - Exercise 3.21 : Implement filter using flatmap
 - Exercise 3.22 : Implemented using (3.23)
 - Exercise 3.23 : Implement zipWith
+- Exercise 3.24 : 
+- Exercise 3.25 : Implement size on tree
+- Exercise 3.26 : Implement maximum (node value) for tree 
+- Exercise 3.27 : Implement depth for a tree
+- Exercise 3.28 : Implement map for a tree
+
 
 
  
