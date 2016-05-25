@@ -1,5 +1,11 @@
 module Chapter3b where
 import Prelude hiding (maximum, map)
+import Data.List (inits, tails)
+
+
+-- Exercise 3.24
+hasSubSequence :: (Eq a) => [a] -> [a] -> Bool
+hasSubSequence sup sub = sub `elem` (filter ( not . null) . concatMap inits . tails $ sup )
 
 
 data Tree a = Leaf a | Branch (Tree a) (Tree a) deriving (Eq, Show)

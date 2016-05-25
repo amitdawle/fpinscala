@@ -3,10 +3,25 @@ import Test.QuickCheck
 
 import Prelude hiding (maximum, map)
 
-import Chapter3b (Tree(Leaf), Tree(Branch), size, maximum, depth, map)
+import Chapter3b (hasSubSequence, Tree(Leaf), Tree(Branch), size, maximum, depth, map)
 
 main = hspec $
  describe "Chapter3b" $ do
+
+  describe "hasSubSequence" $ do
+   it "works when 'super string' is []" $ do
+    hasSubSequence [] [2,3,4] `shouldBe` False
+   it "works when 'sub string' is []" $ do
+    hasSubSequence [2,3,4] [] `shouldBe` False
+   it "works when 'sub string' exist in 'super string'" $ do
+    hasSubSequence [1,2,3,4,5,6] [2,3,4] `shouldBe` True
+   it "works when 'sub string' does not exist in 'super string' " $ do
+    hasSubSequence [1,2,3,4,5,6] [0,7]  `shouldBe` False
+   it "works correctly (returns false) when only part of 'sub string' exist in 'super string'" $ do
+    hasSubSequence [1,2,3,4,5,6] [2,3,7]  `shouldBe` False
+   it "works correctly (returns false) when only 'sub string' is bigger than 'super string'" $ do
+    hasSubSequence [1,2,3,4,5,6] [1,2,3,4,5,6,7,8,9] `shouldBe` False
+
 
   describe "size" $ do
    it "works for Tree with single leaf" $ do
