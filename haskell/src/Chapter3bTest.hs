@@ -3,7 +3,8 @@ import Test.QuickCheck
 
 import Prelude hiding (maximum, map)
 
-import Chapter3b (hasSubSequence, Tree(Leaf), Tree(Branch), size, maximum, depth, map)
+import Chapter3b (hasSubSequence, Tree(Leaf), Tree(Branch), size, maximum, depth, map,
+                  size2, maximum2, depth2, map2)
 
 main = hspec $
  describe "Chapter3b" $ do
@@ -63,4 +64,42 @@ main = hspec $
     map (*4) (Branch (Branch (Leaf 1) (Leaf 2)) (Branch (Leaf 4) (Leaf 5))) `shouldBe` (Branch (Branch (Leaf 4) (Leaf 8)) (Branch (Leaf 16) (Leaf 20)))
    it "works for unbalanced trees " $ do
     map (+4) (Branch (Branch (Branch (Leaf 0) (Leaf 1)) (Leaf 2)) (Leaf 4)) `shouldBe` (Branch (Branch (Branch (Leaf 4) (Leaf 5)) (Leaf 6)) (Leaf 8))
+
+
+  describe "size2" $ do
+   it "works for Tree with single leaf" $ do
+    size2 (Leaf 1) `shouldBe` 1
+   it "works for Tree with branch having two leaves" $ do
+    size2 (Branch (Leaf 1) (Leaf 2)) `shouldBe` 3
+   it "works for deeper Tree " $ do
+    size2 (Branch (Branch (Leaf 1) (Leaf 2)) (Branch (Leaf 4) (Leaf 5))) `shouldBe` 7
+   it "works for unbalanced trees " $ do
+    size2 (Branch (Branch (Leaf 1) (Leaf 2)) (Leaf 4)) `shouldBe` 5
+
+  describe "maximum2" $ do
+   it "works for Tree with single leaf" $ do
+    maximum2 (Leaf 5) `shouldBe` 5
+   it "works for Tree with branch having just two leaves" $ do
+    maximum2 (Branch (Leaf 1) (Leaf 2)) `shouldBe` 2
+   it "works for deeper Tree " $ do
+    maximum2 (Branch (Branch (Leaf 1) (Leaf 2)) (Branch (Leaf 4) (Leaf 5))) `shouldBe` 5
+   it "works for unbalanced trees " $ do
+    maximum2 (Branch (Branch (Leaf 1) (Leaf 2)) (Leaf 4)) `shouldBe` 4
+
+
+  describe "depth2" $ do
+   it "works for Tree with single leaf" $ do
+    depth2 (Leaf 5) `shouldBe` 1
+   it "works for Tree with branch having just two leaves" $ do
+    depth2 (Branch (Leaf 1) (Leaf 2)) `shouldBe` 2
+   it "works for deeper Tree " $ do
+    depth2 (Branch (Branch (Leaf 1) (Leaf 2)) (Branch (Leaf 4) (Leaf 5))) `shouldBe` 3
+   it "works for unbalanced trees " $ do
+    depth2 (Branch (Branch (Branch (Leaf 0) (Leaf 1)) (Leaf 2)) (Leaf 4)) `shouldBe` 4
+
+  describe "map2" $ do
+   it "works for Tree with single leaf" $ do
+    map2 (\x -> Leaf (x + 2) ) (\l r -> Branch l r) (Leaf 5) `shouldBe` (Leaf 7)
+   it "works for Tree with branch having just two leaves" $ do
+    map2 (\x -> Leaf (x * 3) ) (\l r -> Branch l r) (Branch (Leaf 1) (Leaf 2)) `shouldBe` (Branch (Leaf 3) (Leaf 6))
 
