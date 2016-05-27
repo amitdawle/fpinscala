@@ -37,4 +37,23 @@ object Chapter3 {
   }
 
 
+  // 3.6
+  def init[A](l: List[A]) : List[A] = l match {
+    case Nil => Nil
+    case Cons(h, Nil) => Nil
+    case Cons(h, t) => Cons(h , init(t))
+  }
+
+
+  def takeWhile[A](l: List[A]) (f: A => Boolean) : List[A] = l match {
+    case Nil => Nil
+    case Cons(h, t) => if( f(h) ) Cons( h , takeWhile(t)(f)) else Nil
+  }
+
+  //  -- Exercise 3.7
+  def foldRight[A, B](l: List[A])(z: B)(f:(A, B) => B): B = (l, z) match {
+    case (Nil, b) => b
+    case (Cons(h, t), b) => f (h, foldRight(t)(b)(f) )
+  }
+
 }

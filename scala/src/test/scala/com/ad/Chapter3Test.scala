@@ -88,4 +88,58 @@ class Chapter3Test extends FlatSpec with Matchers {
     dropWhile(Cons (0, Cons(2, Cons(0, Cons (4, Nil)))), {x:Int  => x <= 0}) should be (Cons(2, Cons(0, Cons (4, Nil))))
   }
 
+  // -- Exercise 3.6
+  "init" should "return Nil for empty List" in {
+    init(Nil) should be (Nil)
+  }
+
+  // -- Exercise 3.6
+  "init" should "return Nil for List with one element" in {
+    init(Cons(2,  Nil)) should be (Nil)
+  }
+
+  // -- Exercise 3.6
+  "init" should "return Cons 2 Nil for List (Cons(2, Cons(3, Nil)) " in {
+    init(Cons(2, Cons(3, Nil))) should be (Cons(2, Nil))
+  }
+
+  // -- Exercise 3.6
+  "takeWhile" should "return empty for empty list." in {
+    takeWhile(Nil:List[Int])(x => x > 0) should be (Nil)
+  }
+
+  // -- Exercise 3.6
+  "takeWhile" should "return empty for list with elements but on match." in {
+    takeWhile(Cons(-2 , Cons(-3, Nil)))(x => x > 0) should be (Nil)
+  }
+
+  // -- Exercise 3.6
+  "takeWhile" should "return list with matching elements." in {
+    takeWhile(Cons(-2 , Cons(-3, Cons(4, Nil))))(x => x < 0) should be (Cons(-2, Cons(-3, Nil)))
+  }
+
+  // -- Exercise 3.6
+  "takeWhile" should "stop taking more elements once it find a non matching element." in {
+    takeWhile(Cons(-2 , Cons(3, Cons(-4, Nil))))(x => x < 0) should be (Cons(-2, Nil))
+  }
+
+  // -- Exercise 3.7
+  "foldRight" should " should compute sum correctly when folding function is sum." in {
+    foldRight(Cons(-2 , Cons(3, Cons(-4, Nil))))(0)((x,y) => x + y) should be (3)
+  }
+
+  "foldRight" should " should compute difference correctly when folding function is minus." in {
+    foldRight(Cons(-2 , Cons(3, Cons(-4, Nil))))(0)((x,y) => x - y) should be (-9)
+  }
+
+  // -- Exercise 3.7
+  "foldRight" should " with Cons function should just copy the list." in {
+    foldRight(Cons(-2 , Cons(3, Cons(-4, Nil))))(Nil:List[Int])((x,y) => Cons(x,y)) should be (Cons(-2 , Cons(3, Cons(-4, Nil))))
+  }
+
+  // -- Exercise 3.7
+  "foldRight" should " with Cons function and a Nil list should justreturn Nil." in {
+    foldRight(Nil)(Nil:List[Int])((x,y) => Cons(x,y)) should be (Nil)
+  }
+
 }
