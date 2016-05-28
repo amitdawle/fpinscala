@@ -37,7 +37,9 @@ Following problem solutions are now available
 - Exercise 3.27 : Implement depth for a tree
 - Exercise 3.28 : Implement map for a tree
 
-
+## Chapter 4
+Following problem solutions are now available
+- Exercise 4.1  : Implement map, flatMap, getOrElse, orElse and filter.
 
  
 
