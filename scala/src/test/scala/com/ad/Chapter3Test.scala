@@ -138,8 +138,39 @@ class Chapter3Test extends FlatSpec with Matchers {
   }
 
   // -- Exercise 3.7
-  "foldRight" should " with Cons function and a Nil list should justreturn Nil." in {
+  "foldRight" should " with Cons function and a Nil list should just return Nil." in {
     foldRight(Nil)(Nil:List[Int])((x,y) => Cons(x,y)) should be (Nil)
   }
+
+  // Exercise 3.9
+  "lengthWithFoldRight" should " work with an empty list." in {
+    lengthWithFoldRight(Nil) should be (0)
+  }
+
+  // Exercise 3.9
+  "lengthWithFoldRight" should " work with a non empty list." in {
+    lengthWithFoldRight(Cons(2,Cons(3,Nil))) should be (2)
+  }
+
+
+  // -- Exercise 3.10
+  "foldLeft" should " should compute sum correctly when folding function is sum." in {
+    foldLeft(Cons(-2 , Cons(3, Cons(-4, Nil))))(0)((x,y) => x + y) should be (3)
+  }
+
+  "foldLeft" should " should compute difference correctly when folding function is minus." in {
+    foldLeft(Cons(-2 , Cons(3, Cons(-4, Nil))))(0)((t,x) => t - x) should be (3)
+  }
+
+  // -- Exercise 3.10
+  "foldLeft" should " with Cons function should just reverse the list." in {
+    foldLeft(Cons(-2 , Cons(3, Cons(-4, Nil))))(Nil:List[Int])((t,x) => Cons(x, t)) should be (Cons(-4 , Cons(3, Cons(-2, Nil))))
+  }
+
+  // -- Exercise 3.10
+  "foldLeft" should " with Cons function and a Nil list should just return Nil." in {
+    foldLeft(Nil)(Nil:List[Int])((x,y) => Cons(y, x)) should be (Nil)
+  }
+
 
 }

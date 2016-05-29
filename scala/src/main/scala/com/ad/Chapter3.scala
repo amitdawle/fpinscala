@@ -56,4 +56,48 @@ object Chapter3 {
     case (Cons(h, t), b) => f (h, foldRight(t)(b)(f) )
   }
 
+
+  // Exercise 3.8 is already covered by 3.7
+
+
+  // Exercise 3.9
+  def lengthWithFoldRight[A](l : List[A]) : Int = {
+    foldRight(l)(0){(x, t:Int) => 1 + t}
+  }
+
+  // Exercise 3.10
+  def foldLeft[A,B](l: List[A])(z: B)(f: (B, A) => B) : B = l match {
+    case Nil => z
+    case Cons (h, t) =>  foldLeft(l)(f(z,h))(f)
+  }
+
+
+  //
+//  -- Exercise 3.11
+//  sum :: (Num a) => (List a) -> a
+//  sum = foldLeft (\t x -> x + t) 0
+//
+//  -- Exercise 3.11
+//  product :: (Num a) => (List a) -> a
+//  product = foldLeft (\t x -> x * t) 1
+//
+//
+//  -- Exercise 3.11
+//  length2 :: (Num b) => (List a) -> b
+//  length2 = foldLeft (\t x -> t + 1) 0
+//
+//
+//  -- Exercise 3.12
+//  reverse :: (List a) -> (List a)
+//  reverse = foldLeft (\t x -> Cons x t ) (Empty)
+//
+//
+//  -- Exercise 3.13
+//  foldLeftWithFoldRight :: (b -> a -> b) -> b -> (List a) -> b
+//  foldLeftWithFoldRight f b l = foldRight (\x g t -> g ( f t x ) ) id l b
+//
+
+
 }
+
+
