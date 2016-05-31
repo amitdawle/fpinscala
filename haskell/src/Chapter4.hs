@@ -36,17 +36,18 @@ variance xs =  flatMap (\m -> mean [ (m - x) * (m - x)  | x <- xs] )  cm
          where cm = mean xs
 
 -- Exercise 4.3
-map2 :: (Option a) -> (Option b) -> (a -> b -> c) -> Option c
-map2 a b f = flatMap (\x -> map (\y -> f x y) b ) a
+map2 :: (a -> b -> c) -> (Option a) -> (Option b)  -> Option c
+map2 f a b = flatMap (\x -> map (\y -> f x y) b ) a
 
-map2_ :: (Option a) -> (Option b) -> (a -> b -> c) -> Option c
-map2_ None _ _  = None
-map2_ _ None _  = None
-map2_ (Some a) (Some b) f  = Some (f a b)
+map2_ :: (a -> b -> c) -> (Option a) -> (Option b)  -> Option c
+map2_ _ None  _  = None
+map2_ _ _ None   = None
+map2_ f (Some a) (Some b) = Some (f a b)
 
-map3 :: (Option a) -> (Option b) -> (Option c) -> (a -> b -> c -> d) -> Option d
-map3 a b c f = flatMap( \x -> flatMap (\y -> map (\z -> f x y z) c ) b ) a
-
-
+map3 :: (a -> b -> c -> d) -> (Option a) -> (Option b) -> (Option c)  -> Option d
+map3 f a b c = flatMap(\x -> map2 (\y z -> f x y z ) b c ) a
 
 
+-- Exercise 4.4
+sequence :: [Option a] -> Option [a]
+sequence xs = foldr (map2 (:) ) (Some []) xs

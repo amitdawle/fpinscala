@@ -1,9 +1,9 @@
 import Test.Hspec
 import Test.QuickCheck
-import Prelude hiding(map, filter)
+import Prelude hiding(map, filter, sequence)
 import Data.List (foldl')
 import Chapter4 (Option(None), Option(Some), map, flatMap, getOrElse, orElse, filter,
-                 variance, map2, map3)
+                 variance, map2, map3, sequence)
 
 main = hspec $
  describe "Chapter4" $ do
@@ -58,29 +58,39 @@ main = hspec $
 
   describe "map2" $ do
    it "works when both arguments are None" $ do
-     map2 (None) (None) (+) `shouldBe` (None)
+     map2  (+) (None) (None)  `shouldBe` (None)
    it "works when first argument is None" $ do
-     map2 (Some 2) (None) (+) `shouldBe` (None)
+     map2 (+) (Some 2) (None)  `shouldBe` (None)
    it "works when second argument is None" $ do
-     map2 (None) (Some 2) (+) `shouldBe` (None)
+     map2 (+) (None) (Some 2)  `shouldBe` (None)
    it "works when the arguments have a value" $ do
-     map2 (Some 2) (Some 3) (+) `shouldBe` (Some 5)
+     map2 (+) (Some 2) (Some 3)  `shouldBe` (Some 5)
 
 
   describe "map3" $ do
    it "works when all arguments are None" $ do
-     map3 (None) (None) (None) (\x y z -> x + y + z) `shouldBe` (None)
+     map3 (\x y z -> x + y + z) (None) (None) (None) `shouldBe` (None)
    it "works when first arguments is None" $ do
-     map3 (None) (Some 2) (Some 3) (\x y z -> x + y + z) `shouldBe` (None)
+     map3 (\x y z -> x + y + z) (None) (Some 2) (Some 3)  `shouldBe` (None)
    it "works when first argument is not None but other arguments are None" $ do
-     map3 (Some 2) (None) (None) (\x y z -> x + y + z) `shouldBe` (None)
+     map3 (\x y z -> x + y + z) (Some 2) (None) (None) `shouldBe` (None)
    it "works when second argument is None" $ do
-     map3 (Some 2) (None) (Some 3) (\x y z -> x + y + z) `shouldBe` (None)
+     map3 (\x y z -> x + y + z) (Some 2) (None) (Some 3)  `shouldBe` (None)
    it "works when second argument is not None but other arguments are None" $ do
-     map3 (None) (Some 2) (None) (\x y z -> x + y + z) `shouldBe` (None)
+     map3 (\x y z -> x + y + z) (None) (Some 2) (None)  `shouldBe` (None)
    it "works when third argument is None" $ do
-     map3 (Some 2) (Some 2) (None) (\x y z -> x + y + z) `shouldBe` (None)
+     map3 (\x y z -> x + y + z) (Some 2) (Some 2) (None) `shouldBe` (None)
    it "works when third argument is not None but other arguments are None" $ do
-     map3 (None) (None) (Some 2) (\x y z -> x + y + z) `shouldBe` (None)
+     map3 (\x y z -> x + y + z) (None) (None) (Some 2) `shouldBe` (None)
    it "works when all arguments have a value" $ do
-     map3 (Some 3) (Some 4) (Some 5) (\x y z -> x + y + z) `shouldBe` (Some 12)
+     map3 (\x y z -> x + y + z) (Some 3) (Some 4) (Some 5) `shouldBe` (Some 12)
+
+  describe "sequence" $ do
+   it "works for [] list" $ do
+    sequence ([] :: (Num a) => [Option a]) `shouldBe` (Some [])
+   it "works for list of Somes" $ do
+    sequence [Some 2, Some 3, Some 4] `shouldBe` (Some [2,3,4])
+   it "works for list of Nones" $ do
+    sequence [None :: (Num a) => Option a, None, None] `shouldBe` (None)
+   it "works for list of Somes and Nones" $ do
+    sequence [Some 3, None, Some 2] `shouldBe` (None)
