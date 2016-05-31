@@ -3,7 +3,7 @@ import Test.QuickCheck
 import Prelude hiding(map, filter, sequence)
 import Data.List (foldl')
 import Chapter4 (Option(None), Option(Some), map, flatMap, getOrElse, orElse, filter,
-                 variance, map2, map3, sequence)
+                 variance, map2, map3, sequence, traverse1, traverse2, sequence2)
 
 main = hspec $
  describe "Chapter4" $ do
@@ -87,10 +87,37 @@ main = hspec $
 
   describe "sequence" $ do
    it "works for [] list" $ do
-    sequence ([] :: (Num a) => [Option a]) `shouldBe` (Some [])
+    sequence ([] :: (Num a) => [Option a]) `shouldBe` (None)
    it "works for list of Somes" $ do
     sequence [Some 2, Some 3, Some 4] `shouldBe` (Some [2,3,4])
    it "works for list of Nones" $ do
     sequence [None :: (Num a) => Option a, None, None] `shouldBe` (None)
    it "works for list of Somes and Nones" $ do
     sequence [Some 3, None, Some 2] `shouldBe` (None)
+
+
+  describe "traverse1" $ do
+   it "works for [] " $ do
+    traverse1 (\x -> Some x) ([] :: (Num a) => [Option a]) `shouldBe` (None)
+   it "works for list [2,3,4]" $ do
+    traverse1 (\x -> Some x)[2,3,4] `shouldBe` (Some [2,3,4])
+   it "works [2,3,4] mapped to [Some 2, None ,Some 4], returning None" $ do
+    traverse1 (\x -> if( even x) then Some x else None)[2,3,4] `shouldBe` (None)
+
+  describe "traverse2" $ do
+   it "works for [] " $ do
+    traverse2 (\x -> Some x) ([] :: (Num a) => [Option a]) `shouldBe` (None)
+   it "works for list [2,3,4]" $ do
+    traverse2 (\x -> Some x)[2,3,4] `shouldBe` (Some [2,3,4])
+   it "works [2,3,4] mapped to [Some 2, None ,Some 4], returning None" $ do
+    traverse2 (\x -> if( even x) then Some x else None)[2,3,4] `shouldBe` (None)
+
+  describe "sequence2" $ do
+   it "works for [] list" $ do
+    sequence2 ([] :: (Num a) => [Option a]) `shouldBe` (None)
+   it "works for list of Somes" $ do
+    sequence2 [Some 2, Some 3, Some 4] `shouldBe` (Some [2,3,4])
+   it "works for list of Nones" $ do
+    sequence2 [None :: (Num a) => Option a, None, None] `shouldBe` (None)
+   it "works for list of Somes and Nones" $ do
+    sequence2 [Some 3, None, Some 2] `shouldBe` (None)

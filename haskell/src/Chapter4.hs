@@ -1,5 +1,5 @@
 module Chapter4 where
-import Prelude hiding(map, filter)
+import Prelude hiding(map, filter, sequence)
 
 data Option a = Some a | None deriving (Show, Eq) -- Maybe a = Just a | Nothing
 
@@ -50,4 +50,17 @@ map3 f a b c = flatMap(\x -> map2 (\y z -> f x y z ) b c ) a
 
 -- Exercise 4.4
 sequence :: [Option a] -> Option [a]
+sequence [] = None
 sequence xs = foldr (map2 (:) ) (Some []) xs
+
+-- Exercise 4.5
+traverse1 :: (a -> Option b) -> [a] -> Option [b]
+--traverse1 f = sequence.map f -- map is hidden
+traverse1 f xs =  sequence [f x | x <- xs]
+
+traverse2 :: (a -> Option b) -> [a] -> Option [b]
+traverse2 _ [] = None
+traverse2 f xs =  foldr (\x t -> map2 (:) (f x) t ) (Some []) xs
+
+sequence2 :: [Option a] -> Option [a]
+sequence2 = traverse2 id
