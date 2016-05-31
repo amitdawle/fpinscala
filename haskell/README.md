@@ -40,7 +40,8 @@ Following problem solutions are now available
 ## Chapter 4
 Following problem solutions are now available
 - Exercise 4.1  : Implement map, flatMap, getOrElse, orElse and filter.
-
+- Exercise 4.2  : Implement variance
+- Exercise 4.3  : Implement map2
  
 
 
