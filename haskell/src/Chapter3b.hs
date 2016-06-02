@@ -46,7 +46,7 @@ depth2  :: (Num a, Ord a) => Tree a -> Int
 depth2 = fold (\x -> 1) (\x y -> if x > y then x + 1 else y + 1)
 
 map2   :: ( a -> b ) -> (b -> b -> b) ->  Tree a -> b
-map2 f g = fold (\v -> f v) (\l r -> g l r)
+map2 f g = fold (f) (g)
 
 size2  :: (Num a) => Tree a -> a
 size2 = fold (\x -> 1) (\x y -> x + y + 1)

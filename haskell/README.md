@@ -42,6 +42,11 @@ Following problem solutions are now available
 - Exercise 4.1  : Implement map, flatMap, getOrElse, orElse and filter.
 - Exercise 4.2  : Implement variance
 - Exercise 4.3  : Implement map2
+- Exercise 4.4  : Implement sequence
+- Exercise 4.5  : Implement traverse
+- Exercise 4.6  : Implement map, flatMap, orElse and map2 for Either
+- Exercise 4.7  : Implement sequence and traverse for Either
+- Exercise 4.8  : Implement traverse and map2 that can capture all errors.
  
 
 
