@@ -15,6 +15,18 @@ object Chapter5 {
       case Cons(h, t) => h() :: t().toList
     }
 
+    def take(n:Int) : Stream[A] = this match {
+      case Empty => Stream.empty
+      case Cons(h, t) if n > 0 => Stream.cons(h() , t().take(n-1))
+      case _ =>  Stream.empty
+    }
+
+    def drop(n:Int) : Stream[A] = this match {
+      case Empty => Stream.empty
+      case Cons(h, t) if n > 0 =>  t().drop(n-1)
+      case _ =>  this
+    }
+
   }
 
 
