@@ -27,6 +27,13 @@ object Chapter5 {
       case _ =>  this
     }
 
+
+    def takeWhile(p: A => Boolean) : Stream[A] = this match {
+      case Empty => Stream.empty
+      case Cons(h, t) if p(h()) => Stream.cons(h() , t().takeWhile(p))
+      case _ =>  Stream.empty
+    }
+
   }
 
 
