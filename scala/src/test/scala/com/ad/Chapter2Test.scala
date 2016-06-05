@@ -4,7 +4,6 @@ import org.scalatest._
 
 import com.ad.Chapter2._
 
-import scala.Function
 
 class Chapter2Test extends FlatSpec with Matchers {
 
