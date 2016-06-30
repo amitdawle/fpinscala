@@ -6,3 +6,6 @@ The scala code and tests are in scala directory. A haskell port of solutions (al
 - Chapter 2 solutions available.
 - Chapter 3 solutions available.
 - Chapter 4 solutions available (haskell).
+- Chapter 5 solutions available.
+- Chapter 6 solutions available (haskell).
+
