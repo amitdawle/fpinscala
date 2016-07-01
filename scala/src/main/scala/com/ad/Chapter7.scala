@@ -55,10 +55,10 @@ object Chapter7 {
         else UnitFuture(ps.head(es).get :: sequenceWithRun(ps.tail)(es).get)
       }
     }
-
+ 
 
     def sequence[A](ps: List[Par[A]]): Par[List[A]] = {
-      ps.foldLeft(unit(Nil): Par[List[A]]) { (t: Par[List[A]], x: Par[A]) => Par.map2(x, t) { (a, b) => (a :: b) } }
+      ps.foldRight(unit(Nil): Par[List[A]]) { (x: Par[A], t: Par[List[A]]) => Par.map2(x, t) { (a, b) => (a :: b) } }
     }
 
 
@@ -104,7 +104,7 @@ object Chapter7 {
         val (l, r) = p.splitAt(p.length / 2)
         Par.map2(fork(parWordCount(l)), fork(parWordCount(r)))((a, b) => a + b )
       }
-   }
+    }
 
     def map[A,B](pa :Par[A]) (f:A => B) : Par[B] = map2(pa , unit())((a,_) => f(a))
 
@@ -119,7 +119,6 @@ object Chapter7 {
     def map5[A, B, C, D, E, F](a: Par[A], b: Par[B], c:Par[C], d: Par[D], e: Par[E])(f: A => B => C => D => E => F): Par[F] = {
       map3 (map3(a, b, c)(v =>(w =>(x => f(v)(w)(x)))), d, e)((g =>( y =>( z => g(y)(z)) ) ))
     }
-
 
 
      // 7.11
@@ -171,10 +170,6 @@ object Chapter7 {
     def map2WithFlatMap[A, B, C](pa: Par[A], pb: Par[B])(f: (A, B) => C): Par[C] = {
       flatmap(pa)(a => flatmap(pb)( b => unit( f(a,b)) )   )
     }
-
-
-
   }
-
-
 }
+
